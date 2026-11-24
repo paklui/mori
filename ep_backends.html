@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choosing an EP API and backend &mdash; MORI development (fa9b8932) documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=440f5c5d"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MORI-EP Benchmark" href="MORI-EP-BENCHMARK.html" />
+    <link rel="prev" title="MORI-EP User Guide" href="MORI-EP-GUIDE.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #C00000" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MORI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Install MORI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-EP</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="MORI-EP-GUIDE.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Choosing an API and backend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#epv2-configuration-and-lifecycle">EPv2 configuration and lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#validation-before-tuning">Validation before tuning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-EP-BENCHMARK.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EPv2_PERF.html">V1 vs V2 inter-node performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rdma_bandwidth_utilization.html">RDMA bandwidth in the kernels</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-FUSED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-CCO-FUSED-OPS-GUIDE.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-ar.html">GEMM + all-reduce</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-rs.html">GEMM + reduce-scatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-a2a.html">GEMM + all-to-all</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-ag.html">GEMM + all-gather</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-ag-gemm.html">All-gather + GEMM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-a2a-gemm.html">All-to-all + GEMM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-tests-and-benchmarks.html">Tests and benchmarks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-SHMEM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-SHMEM-GUIDE.html">SHMEM guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-CCO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-CCO-GUIDE.html">CCO guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cco-device-api.html">Device API for FlyDSL and Triton</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cco-examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cco-benchmarks.html">Benchmarks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-IO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-IO-GUIDE.html">IO guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-IO-BENCHMARK.html">Benchmark</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-UMBP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="umbp-overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-configuration.html">Configuration and environment variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-pure-ssd-mode.html">Pure-SSD mode and multi-drive tiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-numa-tier-placement.html">NUMA placement for a DRAM tier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-kv-indexer-export.html">KV indexer export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-UMBP-PD-BENCHMARK.html">PD disaggregation benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UMBP-TIER-MANAGEMENT-BENCHMARK.html">Tier-management benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PROFILER.html">MORI-VIZ kernel profiler</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/communication.html">Communication APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/profiler.html">Profiler API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/umbp.html">UMBP master client</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI_JIT_ARCHITECTURE.html">JIT compilation framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI_JIT_V2_DESIGN.html">JIT v2 (in Chinese)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-UMBP-SINGLE-NODE-GUIDE.html">UMBP single-node smoke test</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #C00000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MORI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Choosing an EP API and backend</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ep_backends.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="choosing-an-ep-api-and-backend">
+<h1>Choosing an EP API and backend<a class="headerlink" href="#choosing-an-ep-api-and-backend" title="Link to this heading"></a></h1>
+<p>MORI exposes the existing SHMEM-based EP API and the newer CCO-based EPv2 API.
+They have different configuration objects and initialization requirements.
+Keep an existing deployment on its tested API unless you are explicitly
+evaluating a migration.</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">EP paths in the development source</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Path</p></th>
+<th class="head"><p>Import / selection</p></th>
+<th class="head"><p>Topology</p></th>
+<th class="head"><p>Scope and restrictions</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Existing EP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mori.ops</span></code></p></td>
+<td><p>Intra-node and inter-node kernel types</p></td>
+<td><p>SHMEM initialization; use <a class="reference internal" href="MORI-EP-GUIDE.html"><span class="doc">MORI-EP User Guide</span></a> for configuration,
+dispatch/combine, tuning and supported kernel types.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EPv2, FlyDSL</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mori.ops.dispatch_combine_v2</span></code>; <code class="docutils literal notranslate"><span class="pre">kernel_backend=&quot;flydsl&quot;</span></code></p></td>
+<td><p>Intra-node only</p></td>
+<td><p>Gather/scatter combine, quantization, standard-MoE conversion and routing
+replay, subject to dtype and architecture restrictions below.</p></td>
+</tr>
+<tr class="row-even"><td><p>EPv2, HIP</p></td>
+<td><p>Same EPv2 import; <code class="docutils literal notranslate"><span class="pre">kernel_backend=&quot;hip&quot;</span></code></p></td>
+<td><p>Intra-node</p></td>
+<td><p>Gather combine in BF16/FP32, and a quantized combine (see the EPv2 package
+README for the formats per arch). On gfx942/gfx950 also the unquantized
+scatter combine, the <code class="docutils literal notranslate"><span class="pre">max_total_recv_tokens</span></code> cap, routing replay,
+<code class="docutils literal notranslate"><span class="pre">local_expert_count()</span></code> and BF16 standard-MoE conversion. Dispatch can carry
+already-quantized FP8/FP4 payloads. Does not require FlyDSL.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EPv2, HIP internode preview</p></td>
+<td><p>HIP backend with <code class="docutils literal notranslate"><span class="pre">gpu_per_node</span> <span class="pre">&lt;</span> <span class="pre">world_size</span></code></p></td>
+<td><p>Multiple physical nodes over CCO/GDA</p></td>
+<td><p>BF16/FP32/FP8 dispatch, plus packed FP4 dispatch with a BF16 or FP32
+combine (not with <code class="docutils literal notranslate"><span class="pre">async_ll</span></code>); no FP4 combine, quantization,
+standard-MoE conversion or scatter combine. The communicator’s node
+grouping must match the config.</p></td>
+</tr>
+</tbody>
+</table>
+<p>This table describes development source, not a guarantee that all paths are
+available in every published wheel. Check the installed release and its
+<a class="reference external" href="https://github.com/ROCm/mori/releases">release notes</a>.</p>
+<section id="epv2-configuration-and-lifecycle">
+<h2>EPv2 configuration and lifecycle<a class="headerlink" href="#epv2-configuration-and-lifecycle" title="Link to this heading"></a></h2>
+<p>Import the EPv2 classes explicitly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mori.ops.dispatch_combine_v2</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">EpDispatchCombineConfig</span><span class="p">,</span>
+    <span class="n">EpDispatchCombineOp</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Select the backend with <code class="docutils literal notranslate"><span class="pre">config.kernel_backend</span></code> or
+<code class="docutils literal notranslate"><span class="pre">MORI_V2_KERNEL_BACKEND</span></code>. The default is the HIP backend on gfx125x and the
+FlyDSL backend elsewhere. Importing the package does not load either backend;
+construction loads the selected one.
+EPv2 uses an explicit CCO communicator, described in <a class="reference internal" href="MORI-CCO-GUIDE.html"><span class="doc">MORI CCO Guide</span></a>.
+It does not inherit the legacy API’s process-global SHMEM bootstrap contract.</p>
+<p>Read the maintained <a class="reference external" href="https://github.com/ROCm/mori/blob/main/python/mori/ops/dispatch_combine_v2/README.md">EPv2 package guide</a>
+for configuration, initialization, teardown and complete commands. It documents
+the following important restrictions:</p>
+<ul class="simple">
+<li><p>FP4 conversion kernels require gfx950 or gfx1250; gfx942 lacks the conversion
+intrinsics. The two supported targets use different instructions (gfx950 the
+<code class="docutils literal notranslate"><span class="pre">cvt_scalef32_pk_*_fp4</span></code> pair-at-a-time family, gfx1250 a pack-of-8), so this
+is a per-target port rather than one shared path.</p></li>
+<li><p>FP8 representation differs by target: OCP E4M3 on gfx950 and E4M3FNUZ on gfx942.</p></li>
+<li><p>On the internode path, <code class="docutils literal notranslate"><span class="pre">quant_type</span></code> must be <code class="docutils literal notranslate"><span class="pre">&quot;none&quot;</span></code>, because the
+internode combine is unquantized. The config rejects anything else whenever
+<code class="docutils literal notranslate"><span class="pre">world_size</span> <span class="pre">&gt;</span> <span class="pre">gpu_per_node</span></code>, independently of the backend. HIP is simply the
+only backend that has an internode path today.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gpu_per_node</span></code> determines physical node grouping. A single host cannot
+emulate the two-node internode test by changing world size alone.</p></li>
+<li><p>For internode, <code class="docutils literal notranslate"><span class="pre">internode_kernel</span></code> chooses <code class="docutils literal notranslate"><span class="pre">&quot;v2&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;v2_ll&quot;</span></code> or
+<code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code>. Auto chooses by the <code class="docutils literal notranslate"><span class="pre">max_num_inp_token_across_ranks</span></code> passed to
+<code class="docutils literal notranslate"><span class="pre">dispatch</span></code> (the largest token count any rank passes that call), not by
+buffer capacity, and runs <code class="docutils literal notranslate"><span class="pre">&quot;v2&quot;</span></code> when it is not passed. <code class="docutils literal notranslate"><span class="pre">low_latency=True</span></code>
+or <code class="docutils literal notranslate"><span class="pre">False</span></code> selects <code class="docutils literal notranslate"><span class="pre">&quot;v2_ll&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;v2&quot;</span></code>; see the package guide for what
+it does on gfx125x intranode.</p></li>
+</ul>
+</section>
+<section id="validation-before-tuning">
+<h2>Validation before tuning<a class="headerlink" href="#validation-before-tuning" title="Link to this heading"></a></h2>
+<p>Run the allocated-node checks in <a class="reference internal" href="quickstart.html"><span class="doc">Quickstart</span></a> before measuring performance.
+The source package also provides:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/python/ops/dispatch_combine_v2/test_ep_backend_parity.py</span></code> for comparing
+HIP and FlyDSL on the same inputs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/python/ops/dispatch_combine_v2/test_graph_capture.py</span></code> for graph replay.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/python/ops/dispatch_combine_v2/test_dispatch_combine_v2_internode.py</span></code>
+for real two-node correctness, benchmarking, tuning and stress runs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/python/ops/dispatch_combine_v2/bench_ep.py</span></code>, whose benchmark points
+include an identity-expert correctness check by default.</p></li>
+</ul>
+<p>Record the MORI/FlyDSL revisions, backend, GPU, NIC, transport, dtype, quantization
+mode, shape and graph mode alongside results. A successful intranode benchmark
+does not validate an internode configuration.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MORI-EP-GUIDE.html" class="btn btn-neutral float-left" title="MORI-EP User Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="MORI-EP-BENCHMARK.html" class="btn btn-neutral float-right" title="MORI-EP Benchmark" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, AMD.
+      <span class="lastupdated">Last updated on 2026-11-24.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

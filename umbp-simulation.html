@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UMBP storage and transfer simulation &mdash; MORI development (fa9b8932) documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=440f5c5d"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="UMBP transfer calibration" href="umbp-calibration.html" />
+    <link rel="prev" title="UMBP Distributed Tier-Management Benchmark" href="UMBP-TIER-MANAGEMENT-BENCHMARK.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #C00000" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MORI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Install MORI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-EP</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-EP-GUIDE.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ep_backends.html">Choosing an API and backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-EP-BENCHMARK.html">Benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EPv2_PERF.html">V1 vs V2 inter-node performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rdma_bandwidth_utilization.html">RDMA bandwidth in the kernels</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-FUSED</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-CCO-FUSED-OPS-GUIDE.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-ar.html">GEMM + all-reduce</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-rs.html">GEMM + reduce-scatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-a2a.html">GEMM + all-to-all</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-gemm-ag.html">GEMM + all-gather</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-ag-gemm.html">All-gather + GEMM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-a2a-gemm.html">All-to-all + GEMM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fused-tests-and-benchmarks.html">Tests and benchmarks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-SHMEM</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-SHMEM-GUIDE.html">SHMEM guide</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-CCO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-CCO-GUIDE.html">CCO guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cco-device-api.html">Device API for FlyDSL and Triton</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cco-examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cco-benchmarks.html">Benchmarks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-IO</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI-IO-GUIDE.html">IO guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-IO-BENCHMARK.html">Benchmark</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">MORI-UMBP</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="umbp-overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-configuration.html">Configuration and environment variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-pure-ssd-mode.html">Pure-SSD mode and multi-drive tiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-numa-tier-placement.html">NUMA placement for a DRAM tier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-kv-indexer-export.html">KV indexer export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-monitoring.html">Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-UMBP-PD-BENCHMARK.html">PD disaggregation benchmark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UMBP-TIER-MANAGEMENT-BENCHMARK.html">Tier-management benchmark</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Simulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#enable">Enable</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#standalone-ci">Standalone / CI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#profile-and-model">Profile and model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cross-peer-sharing">Cross-peer sharing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#timing-and-limits">Timing and limits</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="umbp-calibration.html">Calibration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PROFILER.html">MORI-VIZ kernel profiler</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/communication.html">Communication APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/profiler.html">Profiler API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/umbp.html">UMBP master client</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MORI_JIT_ARCHITECTURE.html">JIT compilation framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI_JIT_V2_DESIGN.html">JIT v2 (in Chinese)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MORI-UMBP-SINGLE-NODE-GUIDE.html">UMBP single-node smoke test</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #C00000" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MORI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">UMBP storage and transfer simulation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/umbp-simulation.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="umbp-storage-and-transfer-simulation">
+<h1>UMBP storage and transfer simulation<a class="headerlink" href="#umbp-storage-and-transfer-simulation" title="Link to this heading"></a></h1>
+<p>Simulation keeps allocation, placement, commit/abort, lookup, LRU, leases, events,
+tier policies and control RPCs. Payload storage/transfers are virtual; sim is off by default.</p>
+<section id="enable">
+<h2>Enable<a class="headerlink" href="#enable" title="Link to this heading"></a></h2>
+<p>Keep existing capacities, policies and framework buffers; add the sim settings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">mori.umbp</span><span class="w"> </span><span class="kn">import</span> <span class="n">UMBPClient</span><span class="p">,</span> <span class="n">UMBPConfig</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">UMBPConfig</span><span class="o">.</span><span class="n">from_environment</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">config</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">profile_path</span> <span class="o">=</span> <span class="s2">"/path/to/profile.json"</span>
+<span class="n">config</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">trace_path</span> <span class="o">=</span> <span class="s2">"/tmp/umbp-worker-0.jsonl"</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">UMBPClient</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">put_from_ptr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ptr</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">get_into_ptr</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">ptr</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">UMBPConfig()</span></code> reads the equivalent settings from <code class="docutils literal notranslate"><span class="pre">UMBP_SIM_ENABLE=1</span></code>,
+<code class="docutils literal notranslate"><span class="pre">UMBP_SIM_PROFILE=/path/to/profile.json</span></code> and <code class="docutils literal notranslate"><span class="pre">UMBP_SIM_TRACE=/tmp/umbp-worker-0.jsonl</span></code>.
+Existing APIs and return types remain available. Use a separate trace file per client/run.
+DRAM, HBM and file-backed SSD tiers are supported. Embedded mode defaults to DRAM;
+select SSD through the existing backend policy or distributed medium configuration;
+<code class="docutils literal notranslate"><span class="pre">ssd.enabled</span></code> alone does not select SSD. Virtual GPU callers require location/device
+metadata via C++ <code class="docutils literal notranslate"><span class="pre">RegisterMemory</span></code>; unregistered real pointers use existing classification.
+Virtual HBM needs no GPU, but normal build dependencies, including HIP, still apply.</p>
+<p>SSD uses the existing <code class="docutils literal notranslate"><span class="pre">SsdBackend</span></code>, <code class="docutils literal notranslate"><span class="pre">PeerSsdManager</span></code>, segment index and multi-drive
+placement. Its files and staging payloads are virtual: <code class="docutils literal notranslate"><span class="pre">storage_dir</span></code> identifies
+shards but no directories/files are created. Capacity includes record headers,
+4 KiB padding and dead records; deleting a key frees disk capacity when its whole
+segment becomes reclaimable. Commit/abort, LRU, staging limits, read leases and
+single-flight reads keep their normal behavior. Simulation starts with an empty
+tier and does not restore persisted data. SPDK backends are outside this file-tier
+implementation.</p>
+<section id="standalone-ci">
+<h3>Standalone / CI<a class="headerlink" href="#standalone-ci" title="Link to this heading"></a></h3>
+<p>Run one server per node; its capacity, page size, LRU and policies apply to all ranks:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">UMBP_SIM_ENABLE</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">UMBP_SIM_PROFILE</span><span class="o">=</span>/path/to/profile.json
+<span class="nb">export</span><span class="w"> </span><span class="nv">UMBP_SIM_TRACE</span><span class="o">=</span>/tmp/umbp-server.jsonl
+umbp_standalone_server<span class="w"> </span>unix:/tmp/umbp.sock
+</pre></div>
+</div>
+<p>Ranks keep their <code class="docutils literal notranslate"><span class="pre">standalone_process</span></code> config and socket, enable <code class="docutils literal notranslate"><span class="pre">config.sim.enabled</span></code>,
+and use distinct trace files. Forwarding ranks need no profile. For <code class="docutils literal notranslate"><span class="pre">auto_start=True</span></code>,
+set the profile in the client; the server receives it and uses trace suffix <code class="docutils literal notranslate"><span class="pre">.server</span></code>.
+Both sides need the updated build and matching sim mode. Range checks remain active;
+closing a rank releases registrations while other ranks retain the shared KV tier.
+Rank timings include IPC and server work; <strong>do not add server trace times to rank times</strong>.</p>
+</section>
+</section>
+<section id="profile-and-model">
+<h2>Profile and model<a class="headerlink" href="#profile-and-model" title="Link to this heading"></a></h2>
+<p><a class="reference download internal" download="" href="_downloads/66cefce8f45ba1c56436ce199ae01101/sim_profile.json"><span class="xref download myst">sim_profile.json</span></a> contains illustrative, uncalibrated
+estimates for <code class="docutils literal notranslate"><span class="pre">cpu_cpu</span></code>, <code class="docutils literal notranslate"><span class="pre">cpu_gpu</span></code>, <code class="docutils literal notranslate"><span class="pre">gpu_cpu</span></code>, <code class="docutils literal notranslate"><span class="pre">gpu_gpu</span></code>, <code class="docutils literal notranslate"><span class="pre">remote_read</span></code>, <code class="docutils literal notranslate"><span class="pre">remote_write</span></code>,
+<code class="docutils literal notranslate"><span class="pre">file_cpu</span></code>, <code class="docutils literal notranslate"><span class="pre">cpu_file</span></code> and <code class="docutils literal notranslate"><span class="pre">file_gpu</span></code>.
+Copy it and adjust the coefficients for your platform.
+Each path names its source/destination memory type, except the remote paths, which use
+the initiator’s read/write direction. Configure every path your workload uses; a missing
+path rejects the transfer. Unused paths may be omitted.</p>
+<p>Profiles may use manual estimates or the optional <a class="reference internal" href="umbp-calibration.html"><span class="std std-doc">engine calibration tools</span></a>.
+Those tools measure <code class="docutils literal notranslate"><span class="pre">LocalCopyEngine</span></code>, <code class="docutils literal notranslate"><span class="pre">HbmCopyEngine</span></code>, <code class="docutils literal notranslate"><span class="pre">MoriIoEngine</span></code>, <code class="docutils literal notranslate"><span class="pre">PosixEngine</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GdsEngine</span></code> and <code class="docutils literal notranslate"><span class="pre">SSDTier</span></code>, and merge
+measured coefficients with explicitly reported estimates for unmeasured paths.
+Select the paths and SSD settings used by your deployment when calibrating.</p>
+<p>For staged SSD load/offload, optional <code class="docutils literal notranslate"><span class="pre">file_cpu_staged</span></code> / <code class="docutils literal notranslate"><span class="pre">cpu_file_staged</span></code> describe storage-path cost;
+normal CPU/GPU/network transfers add their own costs. Fit those SSD coefficients
+to <code class="docutils literal notranslate"><span class="pre">SSDTier</span></code> device I/O plus its skipped payload work (record building, CRC, bounce
+copies and the configured durability mode), excluding control and external
+GPU/RDMA copies that the simulator already counts. Local direct file transfers use
+<code class="docutils literal notranslate"><span class="pre">file_cpu</span></code> / <code class="docutils literal notranslate"><span class="pre">cpu_file</span></code>; profiles without staged variants fall back to those curves.
+<code class="docutils literal notranslate"><span class="pre">file_gpu</span></code> models the opt-in GDS read path
+(<code class="docutils literal notranslate"><span class="pre">UMBP_ENABLE_GDS=1</span></code>); GPU offload remains GPU→DRAM→SSD, matching the real engines.
+Checksum-bearing whole reads use <code class="docutils literal notranslate"><span class="pre">file_cpu_staged</span></code>. Checksum-free records and
+partial reads prefer <code class="docutils literal notranslate"><span class="pre">file_cpu_staged_no_crc</span></code>, which models the same SSDTier I/O
+backend without CRC work. Older profiles fall back to <code class="docutils literal notranslate"><span class="pre">file_cpu</span></code>, then the staged
+curve for these reads; whole reads fall back to <code class="docutils literal notranslate"><span class="pre">file_cpu</span></code>.
+With CRC disabled, calibrate the staged profile with the same setting.
+The example SSD values are estimates, not calibration results.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">channel</span></code></p></td>
+<td><p>Same names share a service queue within one backend client/server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">latency_ns</span></code></p></td>
+<td><p>Nonnegative fixed cost per submitted batch/path.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">copy_latency_ns</span></code></p></td>
+<td><p>Nonnegative cost per coalesced copy; default 0.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">interleave_copies</span></code></p></td>
+<td><p>Optional <code class="docutils literal notranslate"><span class="pre">cpu_gpu</span></code> / <code class="docutils literal notranslate"><span class="pre">gpu_cpu</span></code> flag to wait per copy in pure same-device fallback batches, letting concurrent callers interleave; default false. Gather and mixed batches keep batch scheduling.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">registration_latency_ns</span></code></p></td>
+<td><p>Optional nonnegative first-FD cost for <code class="docutils literal notranslate"><span class="pre">file_gpu</span></code>; default 0.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">log_size_latency_ns</span></code></p></td>
+<td><p>Optional nonnegative SSD read cost per copy × <code class="docutils literal notranslate"><span class="pre">log2(max(1,</span> <span class="pre">mean</span> <span class="pre">copy</span> <span class="pre">bytes</span> <span class="pre">/</span> <span class="pre">4096))</span></code>; default 0.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">batch_log_size_latency_ns</span></code></p></td>
+<td><p>Optional nonnegative SSD read cost per batch × the same size term; default 0.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">serialize_latency</span></code></p></td>
+<td><p>Optional SSD read flag to queue latency as well as bytes, for mutually exclusive I/O batches; default false.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bandwidth_bytes_per_second</span></code></p></td>
+<td><p>Positive effective bandwidth.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">size_knee_bytes</span></code>, <code class="docutils literal notranslate"><span class="pre">large_size_ns_per_byte</span></code></p></td>
+<td><p>Optional paired scalar fields for <code class="docutils literal notranslate"><span class="pre">cpu_staging</span></code> / <code class="docutils literal notranslate"><span class="pre">cpu_staging_read</span></code>: a positive byte threshold and nonnegative additional ns/byte above it. Omitted fields add no cost.</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">cpu_cpu</span></code> coefficients may be arrays indexed by copy threads minus one, clamped to the last
+entry; other paths use scalars. Existing thread selection/thresholds still apply.
+Channel capacity is the maximum measured bandwidth; independent callers can use
+more cores than one call’s copy/write thread limit. Each call retains its thread curve.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>size_term = log2(max(1, bytes / copies / 4096))
+overhead = latency_ns[p] + copies * copy_latency_ns[p]
+         + size_term * (copies * log_size_latency_ns + batch_log_size_latency_ns)
+private_ns = overhead + bytes * 1e9 / bandwidth[p]
+service_ns = overhead + bytes * 1e9 / channel_capacity
+channel_available = max(submitted, channel_available) + service_ns
+finish = max(submitted + private_ns, channel_available)
+</pre></div>
+</div>
+<p>Shared paths sum service costs; zero bytes add no delay and missing paths abort normally.
+For independent SSD reads, <code class="docutils literal notranslate"><span class="pre">service_ns</span></code> includes only the byte cost so request
+latency can overlap, unless <code class="docutils literal notranslate"><span class="pre">serialize_latency</span></code> is true. Writes and mixed read/write
+submits retain the full service cost.</p>
+<p>Pure <code class="docutils literal notranslate"><span class="pre">file_gpu</span></code> submits with <code class="docutils literal notranslate"><span class="pre">serialize_latency=false</span></code> share channel capacity among
+active synchronous copies. Copy/log latency stays private; fixed batch/log latency
+is paid once, using the same five coefficients. Ordinary reservations on that
+channel form a barrier; mixed submits retain the formulas above. File registration
+timing is unchanged.</p>
+<p>Native CRC reads with a matching serialized no-CRC curve on the same channel
+queue the smaller of the two costs as I/O, then finish the remaining CRC cost
+outside that queue. Missing or incompatible curves retain full serialization.</p>
+<p><code class="docutils literal notranslate"><span class="pre">cpu_file_staged</span></code> uses the complete payload curve: record preparation, I/O,
+durability and record-buffer cleanup are included in its measured total cost.
+The basic model reserves that combined cost on the SSD channel; it does not model
+preparation or cleanup overlap between callers separately.</p>
+</section>
+<section id="cross-peer-sharing">
+<h2>Cross-peer sharing<a class="headerlink" href="#cross-peer-sharing" title="Link to this heading"></a></h2>
+<p>For share, keep normal Master/peer configuration, distinct node IDs and reachable
+addresses/ports. Use a dedicated Master, enable sim on <strong>every peer</strong>, and configure
+<code class="docutils literal notranslate"><span class="pre">remote_read</span></code>/<code class="docutils literal notranslate"><span class="pre">remote_write</span></code> from the initiator’s perspective. Separate channel names
+allow independent directions. Fit target-link <strong>Submit+Wait</strong>, not API totals or ping
+RTT when replacing estimates with measurements. The example GPU/network coefficients
+remain uncalibrated; use the separate calibration workflow for platform measurements.
+Local copies finish in Submit; registered remote copies finish in Wait. Unregistered
+CPU callers retain RDMA bounce geometry and serial staging inside Submit. Ranged
+scratch and re-cache payloads are virtual; a re-cached replica can serve other peers.
+Staging uses optional scalar <code class="docutils literal notranslate"><span class="pre">cpu_staging</span></code> / <code class="docutils literal notranslate"><span class="pre">cpu_staging_read</span></code> coefficients calibrated
+from MoriIo’s serial copyin/copyout geometry. Reads fall back to <code class="docutils literal notranslate"><span class="pre">cpu_staging</span></code>, then
+the single-thread <code class="docutils literal notranslate"><span class="pre">cpu_cpu</span></code> estimate. Validate staged timings separately from local copies.
+Sim/real engines reject each other’s handshake. Distributed ranged I/O still needs scratch.
+Remote GPU callers retain real registration restrictions; standalone GPU IPC is local-copy-only.</p>
+</section>
+<section id="timing-and-limits">
+<h2>Timing and limits<a class="headerlink" href="#timing-and-limits" title="Link to this heading"></a></h2>
+<p>JSONL fields are <code class="docutils literal notranslate"><span class="pre">api</span></code>, <code class="docutils literal notranslate"><span class="pre">key_count</span></code>, requested <code class="docutils literal notranslate"><span class="pre">bytes</span></code> (range bytes for ranged calls),
+monotonic <code class="docutils literal notranslate"><span class="pre">start_ns</span></code>/<code class="docutils literal notranslate"><span class="pre">elapsed_ns</span></code>, <code class="docutils literal notranslate"><span class="pre">result_count</span></code> and <code class="docutils literal notranslate"><span class="pre">exception</span></code>. Results count successes/
+matches; void calls and exceptions use -1. Records cover scalar/batch/depth/ranged
+put/get, existence, register/deregister, clear, flush and close. Completion order may
+differ. Files append and flush on flush/close/destruction; an empty path uses INFO
+logging, and disabling INFO skips formatting.</p>
+<p><code class="docutils literal notranslate"><span class="pre">elapsed_ns</span></code> includes real control code, RPC/locks, queueing and modeled transfers,
+ending before trace serialization; whole-API timing also includes trace output.
+Workers/timers use wall time; background work counts when it delays an API/channel.</p>
+<ul class="simple">
+<li><p>Queues belong to one backend client/server, shared by its ranks. Remote-NIC aggregation, switch congestion and dynamic fair sharing are not modeled.</p></li>
+<li><p>Mixed transfer paths on different channels may overlap in the model; real inline engines can serialize them. Validate mixed-tier batches separately.</p></li>
+<li><p>Real control RPC failures remain possible; modeled payload-transfer failures are not synthesized. Same-host peers measure that host’s RPC cost.</p></li>
+<li><p>Scheduling/control overhead limits short-operation accuracy. Profiles depend on platform, concurrency and workload.</p></li>
+<li><p>Virtual addresses and page/key metadata consume resources. Framework buffers, external copies and model execution remain real; use trace/dummy execution, not generated-token correctness checks.</p></li>
+<li><p>GPU/network accuracy and full SGLang performance validation require separate work.</p></li>
+</ul>
+<p>Build <code class="docutils literal notranslate"><span class="pre">test_umbp_sim</span></code> and run <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">-R</span> <span class="pre">'^umbp_sim$'</span></code>; these functional tests need no GPUs.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="UMBP-TIER-MANAGEMENT-BENCHMARK.html" class="btn btn-neutral float-left" title="UMBP Distributed Tier-Management Benchmark" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="umbp-calibration.html" class="btn btn-neutral float-right" title="UMBP transfer calibration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, AMD.
+      <span class="lastupdated">Last updated on 2026-11-24.
+      </span></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
